@@ -3,7 +3,7 @@
 static unsigned long timePeriod;
 static unsigned long timeBLState;
 static unsigned long timeLED;
-static uint8_t dutyValue;
+static uint16_t dutyValue;
 static uint8_t stateBL;
 static bool startBLChange;
 
@@ -17,9 +17,12 @@ static bool ledOn = false;
 #define BLO3_PIN 12
 #define PWM_PIN 13  // Use GPIO12 for PWM output
 
-#define BUILTIN_LED 25
-
-#define DUTY_PERIOD 10L * 1000L * 1000L / 255
+#define BUILTIN_LED 0
+#define PWM_RANGE (4096 - 1)
+#define PWM_RESOLUTION 12
+#define PWM_FREQ 1000
+// 1 kHz = 1000 msec
+#define DUTY_PERIOD 10L * 1000L * 1000L / (PWM_RANGE + 1)
 // 10L * 1000L * 1000L = 10 sec
 #define BLSTATE_PERIOD 10L * 1000L
 // 10L * 1000L = 10 msec
@@ -50,11 +53,11 @@ void init_values ()
 
   // Set the PWM frequency to 100 Hz (i.e., 10 ms period)
   // This function may be available in your Arduino core for RP2040.
-  analogWriteRange (255);
-  analogWriteFreq(100);
+  analogWriteRange (PWM_RANGE);
+  analogWriteFreq(PWM_FREQ);
   // (Optional) Ensure we use 8-bit resolution (0-255)
   // The default resolution is typically 8 bits, but you can set it explicitly if needed.
-  // analogWriteResolution(8);  
+  analogWriteResolution(PWM_RESOLUTION);  
 
   timePeriod = time_us_64(); // Get the initial timestamp 
   timeBLState = time_us_64(); // Get the initial timestamp 
@@ -94,7 +97,7 @@ void loop_duty() {
 
     }
     timePeriod = ts;
-    if (dutyValue < 255)
+    if (dutyValue < PWM_RANGE)
       dutyValue++;
     else 
       dutyValue = 0;
@@ -132,7 +135,7 @@ void simple_loop() {
   // With 256 steps, each step should last ~39 ms (10,000 ms / 256 ≈ 39 ms)
   for (int duty = 0; duty <= 255; duty++) {
     analogWrite(PWM_PIN, duty);   // Update duty cycle
-    delay(10000 / 256);           // Wait ~39 ms between steps
+    delay(10000 / PWM_RANGE);           // Wait ~39 ms between steps
   }
   
   // Optionally, you could reverse the ramp or restart from 0.
