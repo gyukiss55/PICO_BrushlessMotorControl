@@ -1,10 +1,10 @@
 #include <xc.h>
 
 // Configuration bits
-#pragma config FCMEN = OFF
-#pragma config IESO = OFF
-#pragma config MCLRE = ON
-#pragma config WDTEN = OFF
+// #pragma config FCMEN = OFF
+// #pragma config IESO = OFF
+// #pragma config MCLRE = ON
+// #pragma config WDTEN = OFF
 
 // Define configuration bits for internal oscillator at maximum frequency
 // #pragma config FOSC = INTOSC    // Oscillator Selection (INTOSC oscillator; CLKOUT function disabled)
@@ -13,7 +13,7 @@
 // Define constants for port configurations
 // #define _XTAL_FREQ 16000000     // Assuming max internal clock is set to 16 MHz
 
-#define _XTAL_FREQ 8000000  // Set the oscillator frequency to 8 MHz
+// #define _XTAL_FREQ 8000000  // Set the oscillator frequency to 8 MHz
 
 const unsigned char data_table[8] = {
     0x00, 
