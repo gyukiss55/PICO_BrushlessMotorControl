@@ -43,6 +43,7 @@ void main(void) {
 
 void init_ports(void) {
     TRISA = 0b11111111;  // Set RA0, RA1, RA2, and RA4 as inputs (1), others as outputs (0)
+    TRISB = 0x00;
     TRISC = 0x00;        // Set all PORTC pins as outputs (6 digital outputs)
     
     //ANSELA = 0x00;       // Set all pins on PORTA to digital mode
@@ -52,10 +53,12 @@ void init_ports(void) {
 void update_outputs(unsigned char input_combination) {
 	unsigned char addr = input_combination & 0b111;
     unsigned char value = (cnt << 6) & 0b11000000;
-	if (input_combination & 0b10000)
+    cnt++;
+	//if (input_combination & 0b10000)
 		LATC = data_table[addr] || value;
-	else
-		LATC = value;
+	//else
+		//LATC = value;
+    TRISB = cnt;
 }
 
 #if defined _use_update_outputs_v0_
