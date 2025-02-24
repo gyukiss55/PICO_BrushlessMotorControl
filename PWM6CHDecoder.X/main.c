@@ -16,14 +16,14 @@
 // #define _XTAL_FREQ 8000000  // Set the oscillator frequency to 8 MHz
 
 const unsigned char data_table[8] = {
-    0x00, 
+    0b11000000, 
     0b010010, // AH CL
     0b011000, // BH CL
     0b001001, // BH AL
     0b100001, // CH AL
     0b100100, // CH BL
     0b000110, // AH BL
-	0x00 
+	0b11000000 
 };
 
 unsigned char cnt;
