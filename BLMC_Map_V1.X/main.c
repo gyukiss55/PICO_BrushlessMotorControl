@@ -44,5 +44,5 @@ void update_outputs(unsigned char input_combination) {
 		LATC = data_table[addr] || value;
 	//else
 		//LATC = value;
-    TRISB = cnt;
+    LATB = cnt;
 }
