@@ -1,4 +1,9 @@
+
+/*BLMC_Map_V1*/
+
 #include <xc.h>
+
+
 
 const unsigned char data_table[8] = {
     0x00, 
